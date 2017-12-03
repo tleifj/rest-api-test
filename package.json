@@ -1,0 +1,14 @@
+{
+  "name": "rest-api-tutorial",
+  "version": "1.0.0",
+  "description": "A Tutorial for creating a RESTful API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tleifj",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
