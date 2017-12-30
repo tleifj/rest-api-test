@@ -16,5 +16,22 @@ app.use(morgan('dev'));
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 
+// Error Handling
+app.use((req, res, next) => {
+	// Error object provided by Node.js
+	const error = new Error('Not found');
+	error.status = 404;
+	next(error);
+});
+
+app.use((error, req, res, next) => {
+	res.status(error.status || 500);
+	res.json({
+		error: {
+			message: error.message
+		}
+	});
+});
+
 // Export for use in server.js
 module.exports = app;
