@@ -2,15 +2,23 @@
 const express = require('express');
 const app = express();
 
-// Packaage to parse URL-encoded and JSON bodies
+// Package to parse URL-encoded and JSON bodies
 const bodyParser = require('body-parser');
 
 // Logging package for Node.js
 const morgan = require('morgan');
 
+// Include database package Mongoose
+const mongoose = require('mongoose');
+
 // Include route-specifc code
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+// Connect to MongoDB database using Mongoose
+mongoose.connect(
+	'mongodb+srv://tleifj:mRi44ra44m@node-rest-yp8cb.mongodb.net/test'
+);
 
 // Run everything through Morgan middleware for logging requests to console
 app.use(morgan('dev'));
@@ -20,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 // Parse JSON bodies
 app.use(bodyParser.json());
 
-// Add headers to prevent Cross-Origin Resource errors
+// Add headers to prevent Cross-Origin Resource Sharing (CORS) errors
 app.use((req, res, next) => {
 	// Set a header and allow any origin to access the api
 	res.header('Access-Control-Allow-Origin', '*');

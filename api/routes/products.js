@@ -1,7 +1,10 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 // Sub-package of of express
 const router = express.Router();
+
+const Product = require('../models/product')
 
 // Register routes
 // GET requests on /products
@@ -14,11 +17,22 @@ router.get('/', (req, res, next) => {
 // POST requests on /products
 
 router.post('/', (req, res, next) => {
-    const product = {
+    // Create a product model with data from request to store in database
+    const product = new Product({
+        _id: new mongoose.Types.ObjectId,
         // body property comes from bodyParser package
         name: req.body.name,
         price: req.body.price
-    }
+    });
+
+    // Save to database
+    // Method from Mongoose
+    product.save().then(result => {
+       console.log(result); 
+    })
+    .catch(error => {
+        console.log(error);
+    });
     res.status(201).json({
         message: 'Handling POST request to /products',
         createdProduct: product
